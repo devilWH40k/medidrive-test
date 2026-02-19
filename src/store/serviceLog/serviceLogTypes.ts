@@ -1,7 +1,6 @@
 export type ServiceType = 'planned' | 'unplanned' | 'emergency'
 
-export interface ServiceLog {
-  id: string
+export interface ServiceLogFormValues {
   providerId: string
   serviceOrder: string
   carId: string
@@ -11,6 +10,10 @@ export interface ServiceLog {
   endDate: string
   type: ServiceType
   serviceDescription: string
+}
+
+export interface ServiceLog extends ServiceLogFormValues {
+  id: string
   isDraft?: boolean
   isSaved?: boolean
 }
@@ -18,5 +21,6 @@ export interface ServiceLog {
 export interface ServiceLogState {
   drafts: ServiceLog[]
   logs: ServiceLog[]
+  activeDraftId: string | null
   savingStatus: 'idle' | 'saving' | 'saved'
 }
