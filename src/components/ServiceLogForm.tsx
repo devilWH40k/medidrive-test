@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { Box, Grid, TextField, Button, MenuItem, Typography } from '@mui/material'
+import { Box, Grid, TextField, Button, MenuItem, Typography, Paper } from '@mui/material'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import dayjs from 'dayjs'
@@ -125,118 +125,145 @@ const ServiceLogForm = () => {
   }
 
   return (
-    <Box component="form">
-      <Grid container spacing={2}>
-        <Grid size={6}>
-          <TextField
-            label="Provider ID"
-            fullWidth
-            {...register('providerId')}
-            error={!!errors.providerId}
-            helperText={errors.providerId?.message}
-          />
+    <Paper
+      sx={{
+        maxWidth: 700,
+        width: '100%',
+        mx: 'auto',
+        mt: 4,
+        p: 3 
+      }}
+    >
+      <Box component="form">
+        <Grid container spacing={2}>
+          <Grid size={6}>
+            <TextField
+              label="Provider ID"
+              fullWidth
+              {...register('providerId')}
+              error={!!errors.providerId}
+              helperText={errors.providerId?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              label="Service Order"
+              fullWidth
+              {...register('serviceOrder')}
+              error={!!errors.serviceOrder}
+              helperText={errors.serviceOrder?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              label="Car ID"
+              fullWidth {...register('carId')}
+              error={!!errors.carId}
+              helperText={errors.carId?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              label="Odometer"
+              type="number"
+              fullWidth
+              {...register('odometer')}
+              error={!!errors.odometer}
+              helperText={errors.odometer?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              label="Engine Hours"
+              type="number"
+              fullWidth
+              {...register('engineHours')}
+              error={!!errors.engineHours}
+              helperText={errors.engineHours?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              label="Start Date"
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              {...register('startDate')}
+              error={!!errors.startDate}
+              helperText={errors.startDate?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              label="End Date"
+              type="date"
+              fullWidth
+              InputLabelProps={{ shrink: true }}
+              {...register('endDate')}
+              error={!!errors.endDate}
+              helperText={errors.endDate?.message}
+            />
+          </Grid>
+
+          <Grid size={6}>
+            <TextField
+              select
+              label="Type"
+              fullWidth
+              defaultValue=""
+              {...register('type')}
+              error={!!errors.type}
+              helperText={errors.type?.message}
+            >
+              <MenuItem value="planned">Planned</MenuItem>
+              <MenuItem value="unplanned">Unplanned</MenuItem>
+              <MenuItem value="emergency">Emergency</MenuItem>
+            </TextField>
+          </Grid>
+
+          <Grid size={12}>
+            <TextField
+              label="Service Description"
+              fullWidth
+              multiline
+              rows={3}
+              {...register('serviceDescription')}
+            />
+          </Grid>
+
+          <Grid size={12}>
+            <Typography variant="body2">
+              Status: {savingStatus === 'saving' && 'Saving...'}
+                      {savingStatus === 'saved' && 'Draft saved ✓'}
+            </Typography>
+          </Grid>
+
+          <Grid size={12} sx={{ display: 'flex', gap: 2 }}>
+            <Button variant="outlined" onClick={onCreateDraft}>
+              Create Draft
+            </Button>
+
+            <Button variant="outlined" color="error" onClick={() => dispatch(clearDrafts())}>
+              Clear All Drafts
+            </Button>
+
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleSubmit(onCreateServiceLog)}
+            >
+              Create Service Log
+            </Button>
+          </Grid>
         </Grid>
-
-        <Grid size={6}>
-          <TextField
-            label="Service Order"
-            fullWidth
-            {...register('serviceOrder')}
-          />
-        </Grid>
-
-        <Grid size={6}>
-          <TextField label="Car ID" fullWidth {...register('carId')} />
-        </Grid>
-
-        <Grid size={6}>
-          <TextField
-            label="Odometer"
-            type="number"
-            fullWidth
-            {...register('odometer')}
-          />
-        </Grid>
-
-        <Grid size={6}>
-          <TextField
-            label="Engine Hours"
-            type="number"
-            fullWidth
-            {...register('engineHours')}
-          />
-        </Grid>
-
-        <Grid size={6}>
-          <TextField
-            label="Start Date"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            {...register('startDate')}
-          />
-        </Grid>
-
-        <Grid size={6}>
-          <TextField
-            label="End Date"
-            type="date"
-            fullWidth
-            InputLabelProps={{ shrink: true }}
-            {...register('endDate')}
-          />
-        </Grid>
-
-        <Grid size={6}>
-          <TextField
-            select
-            label="Type"
-            fullWidth
-            defaultValue=""
-            {...register('type')}
-          >
-            <MenuItem value="planned">Planned</MenuItem>
-            <MenuItem value="unplanned">Unplanned</MenuItem>
-            <MenuItem value="emergency">Emergency</MenuItem>
-          </TextField>
-        </Grid>
-
-        <Grid size={12}>
-          <TextField
-            label="Service Description"
-            fullWidth
-            multiline
-            rows={3}
-            {...register('serviceDescription')}
-          />
-        </Grid>
-
-        <Grid size={12}>
-          <Typography variant="body2">
-            Status: {savingStatus === 'saving' && 'Saving...'}
-                    {savingStatus === 'saved' && 'Draft saved ✓'}
-          </Typography>
-        </Grid>
-
-        <Grid size={12} sx={{ display: 'flex', gap: 2 }}>
-          <Button variant="outlined" onClick={onCreateDraft}>
-            Create Draft
-          </Button>
-
-          <Button variant="outlined" color="error" onClick={() => dispatch(clearDrafts())}>
-            Clear All Drafts
-          </Button>
-
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleSubmit(onCreateServiceLog)}
-          >
-            Create Service Log
-          </Button>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </Paper>
   );
 }
 

@@ -7,11 +7,11 @@ import DraftsTable from '../components/DraftsTable'
 const ServiceLogPage = () => {
   return (
     <Box sx={{ p: 4 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography sx={{ textAlign: "center" }} variant="h4" gutterBottom>
         Service Logs Management
       </Typography>
 
-      <Paper sx={{ p: 3, mb: 4 }}>
+      <Paper sx={{ p: 3, mb: 4 }} elevation={0}>
         <ServiceLogForm />
       </Paper>
 
